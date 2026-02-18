@@ -13,13 +13,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,6 +77,48 @@ fun KBBIScreen() {
                     .size(72.dp)
             )
         }
+
+        Spacer(Modifier.height(50.dp))
+
+        KBBIOptionButton(
+            word = "Abjad",
+            backgroundColor = MaterialTheme.colorScheme.primary,
+            onClick = {}
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        KBBIOptionButton(
+            word = "Abjat",
+            backgroundColor = MaterialTheme.colorScheme.tertiary,
+            onClick = {}
+        )
+    }
+}
+
+@Composable
+private fun KBBIOptionButton(
+    word: String,
+    backgroundColor: Color,
+    onClick: () -> Unit
+) {
+    Column {
+        TextButton(
+            onClick = onClick,
+            shape = RoundedCornerShape(50),
+            colors = ButtonDefaults.textButtonColors(
+                containerColor = backgroundColor
+            ),
+            modifier = Modifier
+                .fillMaxWidth(0.6f)
+                .height(56.dp)
+        ) {
+            Text(
+                text = word,
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontSize = 18.sp
+            )
+        }
     }
 }
 
@@ -87,5 +132,3 @@ fun KBBIScreenPreview() {
         KBBIScreen()
     }
 }
-
-
