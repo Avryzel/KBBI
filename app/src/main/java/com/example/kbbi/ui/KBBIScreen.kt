@@ -44,20 +44,20 @@ fun KBBIScreen() {
             shape = RoundedCornerShape(50),
             modifier = Modifier
                 .fillMaxWidth(0.8f)
-                .height(50.dp),
+                .height(60.dp),
         ) {
             Text(
                 text = "BENAR!",
                 textAlign = TextAlign.Center,
-                fontSize = 24.sp,
+                fontSize = 26.sp,
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.primary)
-                    .padding(12.dp)
+                    .padding(15.dp)
             )
         }
 
-        Spacer(Modifier.height(50.dp))
+        Spacer(Modifier.height(100.dp))
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -65,7 +65,7 @@ fun KBBIScreen() {
         ) {
             Text(
                 text = "5X",
-                fontSize = 32.sp,
+                fontSize = 50.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimary,
             )
@@ -74,11 +74,11 @@ fun KBBIScreen() {
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier
-                    .size(72.dp)
+                    .size(100.dp)
             )
         }
 
-        Spacer(Modifier.height(50.dp))
+        Spacer(Modifier.height(100.dp))
 
         KBBIOptionButton(
             word = "Abjad",
@@ -86,7 +86,7 @@ fun KBBIScreen() {
             onClick = {}
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(30.dp))
 
         KBBIOptionButton(
             word = "Abjat",
