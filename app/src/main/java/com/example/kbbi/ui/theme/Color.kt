@@ -2,10 +2,14 @@ package com.example.kbbi.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Light Theme
+val SuccessGreen = Color(0xFF81D657)
+val ErrorRed = Color(0xFFFF3B30)
+val StarYellow = Color(0xFFFFD147)
+val LightBackground = Color(0xFFF5F5F5)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Dark Theme
+val SuccessGreenDark = Color(0xFFA5E189)
+val ErrorRedDark = Color(0xFFFF6961)
+val StarYellowDark = Color(0xFFFFDF80)
+val DarkBackground = Color(0xFF121212)
