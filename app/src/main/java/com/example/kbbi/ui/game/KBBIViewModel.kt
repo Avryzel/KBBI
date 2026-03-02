@@ -25,6 +25,31 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
         }
     }
 
+    fun updateUserGuess(newGuess: String) {
+        _uiState.update { currentState ->
+            currentState.copy(userGuess = newGuess)
+        }
+    }
+
+    fun checkUserGuess() {
+        _uiState.update { currentState ->
+            val isCorrect = currentState.userGuess.trim().equals(
+                currentState.currentWord?.formalWord,
+                ignoreCase = true
+            )
+
+            currentState.copy(
+                isCorrect = isCorrect,
+                userGuess = "",
+                streak = if (isCorrect) currentState.streak + 1 else 0
+            )
+        }
+
+        if (_uiState.value.isCorrect) {
+            getNextWord()
+        }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
