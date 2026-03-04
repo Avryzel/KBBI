@@ -6,5 +6,5 @@ data class KBBIUiState(
     val currentWord: KBBIWord? = null,
     val userGuess: String = "",
     val streak: Int = 0,
-    val isCorrect: Boolean = false
+    val isCorrect: Boolean? = null
 )

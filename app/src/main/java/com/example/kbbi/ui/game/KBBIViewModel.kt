@@ -45,7 +45,7 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
             )
         }
 
-        if (_uiState.value.isCorrect) {
+        if (_uiState.value.isCorrect == true) {
             getNextWord()
         }
     }

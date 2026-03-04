@@ -20,6 +20,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,10 +30,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kbbi.ui.game.KBBIViewModel
 import com.example.kbbi.ui.theme.KBBITheme
 
 @Composable
-fun KBBIScreen() {
+fun KBBIScreen(viewModel: KBBIViewModel) {
+    val gameUiState by viewModel.uiState.collectAsState()
+
     Column(
         Modifier
             .fillMaxSize()
@@ -46,15 +51,33 @@ fun KBBIScreen() {
                 .fillMaxWidth(0.8f)
                 .height(60.dp),
         ) {
-            Text(
-                text = "BENAR!",
-                textAlign = TextAlign.Center,
-                fontSize = 26.sp,
-                color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary)
-                    .padding(15.dp)
-            )
+            when (gameUiState.isCorrect) {
+                true -> {
+                    Text(
+                        text = "BENAR!",
+                        textAlign = TextAlign.Center,
+                        fontSize = 26.sp,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.primary)
+                            .padding(15.dp)
+                    )
+                }
+                false -> {
+                    Text(
+                        text = "SALAH!",
+                        textAlign = TextAlign.Center,
+                        fontSize = 26.sp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.primary)
+                            .padding(15.dp)
+                    )
+                }
+                else -> {
+
+                }
+            }
         }
 
         Spacer(Modifier.height(100.dp))
@@ -64,7 +87,7 @@ fun KBBIScreen() {
             modifier = Modifier
         ) {
             Text(
-                text = "5X",
+                text = "${gameUiState.streak}",
                 fontSize = 50.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -129,6 +152,8 @@ private fun KBBIOptionButton(
 @Composable
 fun KBBIScreenPreview() {
     KBBITheme {
-        KBBIScreen()
+        KBBIScreen(
+            viewModel = TODO()
+        )
     }
 }
