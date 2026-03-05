@@ -104,7 +104,7 @@ fun KBBIScreen(viewModel: KBBIViewModel) {
         Spacer(Modifier.height(100.dp))
 
         KBBIOptionButton(
-            word = "Abjad",
+            word = gameUiState.options.getOrNull(0) ?: "",
             backgroundColor = MaterialTheme.colorScheme.primary,
             onClick = {}
         )
@@ -112,7 +112,7 @@ fun KBBIScreen(viewModel: KBBIViewModel) {
         Spacer(Modifier.height(30.dp))
 
         KBBIOptionButton(
-            word = "Abjat",
+            word = gameUiState.options.getOrNull(1) ?: "",
             backgroundColor = MaterialTheme.colorScheme.tertiary,
             onClick = {}
         )
