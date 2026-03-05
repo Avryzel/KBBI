@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.kbbi.data.KBBIDataApplication
 import com.example.kbbi.data.repository.KBBIWordRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,20 +33,26 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
     }
 
     fun checkUserGuess() {
-        _uiState.update { currentState ->
-            val isCorrect = currentState.userGuess.trim().equals(
-                currentState.currentWord?.formalWord,
-                ignoreCase = true
-            )
-
-            currentState.copy(
-                isCorrect = isCorrect,
-                userGuess = "",
-                streak = if (isCorrect) currentState.streak + 1 else 0
-            )
+        if (_uiState.value.isCorrect != null) {
+            return
         }
 
-        if (_uiState.value.isCorrect == true) {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                val isCorrect = currentState.userGuess.trim().equals(
+                    currentState.currentWord?.formalWord,
+                    ignoreCase = true
+                )
+
+                currentState.copy(
+                    isCorrect = isCorrect,
+                    userGuess = "",
+                    streak = if (isCorrect) currentState.streak + 1 else 0
+                )
+            }
+
+            delay(2000L)
+
             getNextWord()
         }
     }
