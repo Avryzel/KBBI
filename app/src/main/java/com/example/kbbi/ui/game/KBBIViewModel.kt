@@ -21,7 +21,11 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
     fun getNextWord() {
         viewModelScope.launch {
             _uiState.update {
-                it.copy(currentWord = kbbiWordRepository.getRandomWord())
+                it.copy(
+                    isCorrect = null,
+                    currentWord = kbbiWordRepository.getRandomWord(),
+                    userGuess = ""
+                )
             }
         }
     }
