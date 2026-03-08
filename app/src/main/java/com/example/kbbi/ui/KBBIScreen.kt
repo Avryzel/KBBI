@@ -106,7 +106,12 @@ fun KBBIScreen(viewModel: KBBIViewModel) {
         KBBIOptionButton(
             word = gameUiState.options.getOrNull(0) ?: "",
             backgroundColor = MaterialTheme.colorScheme.primary,
-            onClick = {}
+            enabled = gameUiState.isCorrect == null,
+            onClick = {
+                val selectedWord = gameUiState.options.getOrNull(0) ?: ""
+                viewModel.updateUserGuess(selectedWord)
+                viewModel.checkUserGuess()
+            }
         )
 
         Spacer(Modifier.height(30.dp))
@@ -114,7 +119,12 @@ fun KBBIScreen(viewModel: KBBIViewModel) {
         KBBIOptionButton(
             word = gameUiState.options.getOrNull(1) ?: "",
             backgroundColor = MaterialTheme.colorScheme.tertiary,
-            onClick = {}
+            enabled = gameUiState.isCorrect == null,
+            onClick = {
+                val selectedWord = gameUiState.options.getOrNull(1) ?: ""
+                viewModel.updateUserGuess(selectedWord)
+                viewModel.checkUserGuess()
+            }
         )
     }
 }
@@ -123,11 +133,13 @@ fun KBBIScreen(viewModel: KBBIViewModel) {
 private fun KBBIOptionButton(
     word: String,
     backgroundColor: Color,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Column {
         TextButton(
             onClick = onClick,
+            enabled = enabled,
             shape = RoundedCornerShape(50),
             colors = ButtonDefaults.textButtonColors(
                 containerColor = backgroundColor
