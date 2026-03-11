@@ -165,7 +165,7 @@ private fun KBBIOptionButton(
 fun KBBIScreenPreview() {
     KBBITheme {
         KBBIScreen(
-            viewModel = TODO()
+            viewModel = TODO(),
         )
     }
 }
