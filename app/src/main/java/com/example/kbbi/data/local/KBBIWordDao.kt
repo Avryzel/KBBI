@@ -11,6 +11,9 @@ interface KBBIWordDao {
     @Query("SELECT * FROM kbbi_words ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomWord(): KBBIWord?
 
+    @Query("SELECT COUNT(*) FROM kbbi_words")
+    suspend fun getWordCount(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWords(words: List<KBBIWord>)
 
