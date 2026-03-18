@@ -7,5 +7,6 @@ data class KBBIUiState(
     val userGuess: String = "",
     val streak: Int = 0,
     val isCorrect: Boolean? = null,
-    val options: List<String> = emptyList()
+    val options: List<String> = emptyList(),
+    val isLoading: Boolean = true
 )

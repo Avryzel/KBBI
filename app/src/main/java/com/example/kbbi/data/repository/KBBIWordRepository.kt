@@ -6,4 +6,5 @@ interface KBBIWordRepository {
     suspend fun getRandomWord(): KBBIWord?
     suspend fun insertWords(words: List<KBBIWord>)
     suspend fun updateWord(word: KBBIWord)
+    suspend fun initializeDatabase()
 }

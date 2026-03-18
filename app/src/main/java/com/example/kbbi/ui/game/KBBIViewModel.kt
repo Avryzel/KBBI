@@ -29,7 +29,8 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
                     isCorrect = null,
                     currentWord = newWord,
                     userGuess = "",
-                    options = shuffledOptions
+                    options = shuffledOptions,
+                    isLoading = false
                 )
             }
         }
@@ -77,6 +78,9 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
     }
 
     init {
-        getNextWord()
+        viewModelScope.launch {
+            kbbiWordRepository.initializeDatabase()
+            getNextWord()
+        }
     }
 }
