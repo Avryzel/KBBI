@@ -12,7 +12,11 @@ interface AppContainer {
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
     override val kbbiWordRepository: KBBIWordRepository by lazy {
-        OfflineKBBIWordRepository(KBBIDatabase.getDatabase(context).wordDao())
+        OfflineKBBIWordRepository(
+            KBBIDatabase.getDatabase(context).wordDao(),
+            assets = context.assets,
+            json = kotlinx.serialization.json.Json
+        )
     }
 }
 

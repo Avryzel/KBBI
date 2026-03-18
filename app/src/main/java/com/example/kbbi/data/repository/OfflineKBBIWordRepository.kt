@@ -20,7 +20,7 @@ class OfflineKBBIWordRepository(
     override suspend fun updateWord(word: KBBIWord) = wordDao.updateWord(word)
 
     @OptIn(ExperimentalSerializationApi::class)
-    suspend fun initializeDatabase() {
+    override suspend fun initializeDatabase() {
         val count = wordDao.getWordCount()
 
         if (count > 0) {
