@@ -30,11 +30,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kbbi.ui.game.KBBIViewModel
 import com.example.kbbi.ui.theme.KBBITheme
 
 @Composable
-fun KBBIScreen(viewModel: KBBIViewModel) {
+fun KBBIScreen(viewModel: KBBIViewModel = viewModel(factory = KBBIViewModel.Factory)) {
     val gameUiState by viewModel.uiState.collectAsState()
 
     Column(
@@ -63,6 +64,7 @@ fun KBBIScreen(viewModel: KBBIViewModel) {
                             .padding(15.dp)
                     )
                 }
+
                 false -> {
                     Text(
                         text = "SALAH!",
@@ -74,6 +76,7 @@ fun KBBIScreen(viewModel: KBBIViewModel) {
                             .padding(15.dp)
                     )
                 }
+
                 else -> {
 
                 }
