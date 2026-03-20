@@ -2,6 +2,7 @@ package com.example.kbbi.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -38,90 +40,99 @@ import com.example.kbbi.ui.theme.KBBITheme
 fun KBBIScreen(viewModel: KBBIViewModel = viewModel(factory = KBBIViewModel.Factory)) {
     val gameUiState by viewModel.uiState.collectAsState()
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(top = 40.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        Surface(
-            shape = RoundedCornerShape(50),
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .height(60.dp),
-        ) {
-            when (gameUiState.isCorrect) {
-                true -> {
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (gameUiState.isLoading) {
+            CircularProgressIndicator(
+                Modifier.align(alignment = Alignment.Center)
+            )
+        } else {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(top = 40.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+                Surface(
+                    shape = RoundedCornerShape(50),
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .height(60.dp),
+                ) {
+                    when (gameUiState.isCorrect) {
+                        true -> {
+                            Text(
+                                text = "BENAR!",
+                                textAlign = TextAlign.Center,
+                                fontSize = 26.sp,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.primary)
+                                    .padding(15.dp)
+                            )
+                        }
+
+                        false -> {
+                            Text(
+                                text = "SALAH!",
+                                textAlign = TextAlign.Center,
+                                fontSize = 26.sp,
+                                color = MaterialTheme.colorScheme.tertiary,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.primary)
+                                    .padding(15.dp)
+                            )
+                        }
+
+                        else -> {
+
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(100.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                ) {
                     Text(
-                        text = "BENAR!",
-                        textAlign = TextAlign.Center,
-                        fontSize = 26.sp,
+                        text = "${gameUiState.streak}",
+                        fontSize = 50.sp,
+                        fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimary,
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier
-                            .background(MaterialTheme.colorScheme.primary)
-                            .padding(15.dp)
+                            .size(100.dp)
                     )
                 }
 
-                false -> {
-                    Text(
-                        text = "SALAH!",
-                        textAlign = TextAlign.Center,
-                        fontSize = 26.sp,
-                        color = MaterialTheme.colorScheme.tertiary,
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.primary)
-                            .padding(15.dp)
-                    )
-                }
+                Spacer(Modifier.height(100.dp))
 
-                else -> {
+                KBBIOptionButton(
+                    word = gameUiState.options.getOrNull(0) ?: "",
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    enabled = gameUiState.isCorrect == null,
+                    onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(0) ?: "") }
+                )
 
-                }
+                Spacer(Modifier.height(30.dp))
+
+                KBBIOptionButton(
+                    word = gameUiState.options.getOrNull(1) ?: "",
+                    backgroundColor = MaterialTheme.colorScheme.tertiary,
+                    enabled = gameUiState.isCorrect == null,
+                    onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(1) ?: "") }
+                )
             }
         }
-
-        Spacer(Modifier.height(100.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-        ) {
-            Text(
-                text = "${gameUiState.streak}",
-                fontSize = 50.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimary,
-            )
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier
-                    .size(100.dp)
-            )
-        }
-
-        Spacer(Modifier.height(100.dp))
-
-        KBBIOptionButton(
-            word = gameUiState.options.getOrNull(0) ?: "",
-            backgroundColor = MaterialTheme.colorScheme.primary,
-            enabled = gameUiState.isCorrect == null,
-            onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(0) ?: "") }
-        )
-
-        Spacer(Modifier.height(30.dp))
-
-        KBBIOptionButton(
-            word = gameUiState.options.getOrNull(1) ?: "",
-            backgroundColor = MaterialTheme.colorScheme.tertiary,
-            enabled = gameUiState.isCorrect == null,
-            onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(1) ?: "") }
-        )
     }
+
 }
 
 @Composable
