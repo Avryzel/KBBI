@@ -67,6 +67,11 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
         }
     }
 
+    fun onOptionSelected(selectedWord: String) {
+        updateUserGuess(selectedWord)
+        checkUserGuess()
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

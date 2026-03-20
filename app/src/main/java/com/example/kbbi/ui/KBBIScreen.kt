@@ -110,11 +110,7 @@ fun KBBIScreen(viewModel: KBBIViewModel = viewModel(factory = KBBIViewModel.Fact
             word = gameUiState.options.getOrNull(0) ?: "",
             backgroundColor = MaterialTheme.colorScheme.primary,
             enabled = gameUiState.isCorrect == null,
-            onClick = {
-                val selectedWord = gameUiState.options.getOrNull(0) ?: ""
-                viewModel.updateUserGuess(selectedWord)
-                viewModel.checkUserGuess()
-            }
+            onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(0) ?: "") }
         )
 
         Spacer(Modifier.height(30.dp))
@@ -123,11 +119,7 @@ fun KBBIScreen(viewModel: KBBIViewModel = viewModel(factory = KBBIViewModel.Fact
             word = gameUiState.options.getOrNull(1) ?: "",
             backgroundColor = MaterialTheme.colorScheme.tertiary,
             enabled = gameUiState.isCorrect == null,
-            onClick = {
-                val selectedWord = gameUiState.options.getOrNull(1) ?: ""
-                viewModel.updateUserGuess(selectedWord)
-                viewModel.checkUserGuess()
-            }
+            onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(1) ?: "") }
         )
     }
 }
