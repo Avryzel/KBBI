@@ -56,12 +56,18 @@ class KBBIViewModel(private val kbbiWordRepository: KBBIWordRepository) : ViewMo
 
                 currentState.copy(
                     isCorrect = isCorrect,
-                    userGuess = "",
                     streak = if (isCorrect) currentState.streak + 1 else 0
                 )
             }
 
             delay(2000L)
+
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isCorrect = null,
+                    userGuess = ""
+                )
+            }
 
             getNextWord()
         }
