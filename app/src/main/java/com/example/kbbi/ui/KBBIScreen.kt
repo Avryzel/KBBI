@@ -39,6 +39,8 @@ import com.example.kbbi.ui.theme.KBBITheme
 @Composable
 fun KBBIScreen(viewModel: KBBIViewModel = viewModel(factory = KBBIViewModel.Factory)) {
     val gameUiState by viewModel.uiState.collectAsState()
+    val optionOne = gameUiState.options.getOrNull(0) ?: ""
+    val optionTwo = gameUiState.options.getOrNull(1) ?: ""
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (gameUiState.isLoading) {
@@ -115,8 +117,16 @@ fun KBBIScreen(viewModel: KBBIViewModel = viewModel(factory = KBBIViewModel.Fact
                 Spacer(Modifier.height(100.dp))
 
                 KBBIOptionButton(
-                    word = gameUiState.options.getOrNull(0) ?: "",
-                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    word = optionOne,
+                    backgroundColor = if (gameUiState.options.getOrNull(0) == gameUiState.userGuess) {
+                        when (gameUiState.isCorrect) {
+                            true -> MaterialTheme.colorScheme.primary
+                            false -> MaterialTheme.colorScheme.tertiary
+                            else -> MaterialTheme.colorScheme.surfaceVariant
+                        }
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    },
                     enabled = gameUiState.isCorrect == null,
                     onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(0) ?: "") }
                 )
@@ -124,15 +134,22 @@ fun KBBIScreen(viewModel: KBBIViewModel = viewModel(factory = KBBIViewModel.Fact
                 Spacer(Modifier.height(30.dp))
 
                 KBBIOptionButton(
-                    word = gameUiState.options.getOrNull(1) ?: "",
-                    backgroundColor = MaterialTheme.colorScheme.tertiary,
+                    word = optionTwo,
+                    backgroundColor = if (gameUiState.options.getOrNull(1) == gameUiState.userGuess) {
+                        when (gameUiState.isCorrect) {
+                            true -> MaterialTheme.colorScheme.primary
+                            false -> MaterialTheme.colorScheme.tertiary
+                            else -> MaterialTheme.colorScheme.surfaceVariant
+                        }
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    },
                     enabled = gameUiState.isCorrect == null,
                     onClick = { viewModel.onOptionSelected(gameUiState.options.getOrNull(1) ?: "") }
                 )
             }
         }
     }
-
 }
 
 @Composable
