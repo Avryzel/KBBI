@@ -179,16 +179,3 @@ private fun KBBIOptionButton(
         }
     }
 }
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun KBBIScreenPreview() {
-    KBBITheme {
-        KBBIScreen(
-            viewModel = TODO(),
-        )
-    }
-}
